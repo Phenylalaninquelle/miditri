@@ -6,6 +6,7 @@ setup(name='Miditri',
       py_modules=['miditri'],
       install_requires=[
           'Click',
+          'Numpy'
       ],
       entry_points='''
         [console_scripts]
