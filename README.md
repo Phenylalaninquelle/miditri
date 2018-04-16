@@ -12,6 +12,7 @@ pip install .
 ```
 
 ### Usage
+`miditri --help` tells you:
 ```
 Usage: miditri [OPTIONS] INFILE
 
@@ -24,7 +25,9 @@ Usage: miditri [OPTIONS] INFILE
 
 Options:
   --outfile TEXT       Path to write results to (in .csv format)
-  --track_num INTEGER  Index of track that contains the notes (zero-based)
-  --find_classes       Determine note classes
+  --track_num INTEGER  Index of track to read from (zero-based)
+  --find_classes       Add note classes to output
+  --use_note_offs      If given, output file will contain information from
+                       note_offmessages
   --help               Show this message and exit.
 ```
