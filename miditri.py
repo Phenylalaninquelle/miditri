@@ -10,11 +10,12 @@ NOTES_PER_OCTAVE = 12
 
 class Miditri(object):
 
-    def __init__(self, infile, outfile, track_num):
+    def __init__(self, infile, outfile, track_num, use_note_offs):
         self.infile = infile
         self.midifile = mido.MidiFile(infile)
         self.track_num = track_num
         self.midi_inf = pd.DataFrame()
+        self.use_note_offs = use_note_offs
         self._init_midi_information()
         self._init_noteclass_lut()
         if outfile is None:
@@ -24,7 +25,11 @@ class Miditri(object):
 
     def write_results(self):
         """Write results to a .csv file"""
-        self.midi_inf.to_csv(self.outfile, index=False)
+        if not self.use_note_offs:
+            write_data = self.midi_inf[self.midi_inf['note_type'] == 'note_on']
+        else:
+            write_data = self.midi_inf
+        write_data.to_csv(self.outfile, index=False)
 
     def _init_midi_information(self):
         """
@@ -59,10 +64,13 @@ class Miditri(object):
 @click.option('--outfile', type=str, default=None,
               help='Path to write results to (in .csv format)')
 @click.option('--track_num', type=int, default=1,
-              help='Index of track that contains the notes (zero-based)')
+              help='Index of track to read from (zero-based)')
 @click.option('--find_classes', is_flag=True,
-              help='Determine note classes')
-def cli(infile, outfile, track_num, find_classes):
+              help='Add note classes to output')
+@click.option('--use_note_offs', is_flag=True,
+              help='If given, output file will contain information from note_off' \
+                    'messages')
+def cli(infile, outfile, track_num, find_classes, use_note_offs):
     """
     Extract various melody-related information from given MIDI file `INFILE`.
     !NOTE!: operates only on a single track in the file
@@ -71,7 +79,7 @@ def cli(infile, outfile, track_num, find_classes):
     in file given with `--outfile` option. If no outfile is given, an `INFILE.csv`
     file is used.
     """
-    miditri = Miditri(infile, outfile, track_num)
+    miditri = Miditri(infile, outfile, track_num, use_note_offs)
     if find_classes:
         miditri.find_note_classes()
     miditri.write_results()
