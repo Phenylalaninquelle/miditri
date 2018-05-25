@@ -8,7 +8,8 @@ setup(name='Miditri',
       py_modules=['miditri'],
       install_requires=[
           'Click',
-          'Pandas'
+          'Pandas',
+          'mido'
       ],
       entry_points='''
         [console_scripts]
