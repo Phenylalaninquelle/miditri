@@ -10,6 +10,10 @@ After cloning this repository, installation happens with
 cd miditri 
 pip install .
 ```
+This also installs the needed packages. If you want to use this without installing, you can install the dependencies with
+```
+pip install -r requirements.txt
+```
 
 ### Usage
 `miditri --help` tells you:
