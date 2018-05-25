@@ -76,7 +76,7 @@ def cli(infile, outfile, track_num, find_classes, use_note_offs):
     !NOTE!: operates only on a single track in the file
 
     Default operation is to write note and time values for all `note_on` messages 
-    in file given with `--outfile` option. If no outfile is given, an `INFILE.csv`
+    in `INFILE` to the path given with `--outfile`. If no outfile is given, an `INFILE.csv`
     file is used.
     """
     miditri = Miditri(infile, outfile, track_num, use_note_offs)
